@@ -8,6 +8,8 @@ const cors = require("cors");
 
 const app = express();
 
+require('dotenv').config();
+
 const db = require("./db");
 
 const days = require("./routes/days");
@@ -47,6 +49,7 @@ module.exports = function application(
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
     ])
       .then(([create, seed]) => {
+        //console.log("create:",create);
         app.get("/api/debug/reset", (request, response) => {
           db.query(create)
             .then(() => db.query(seed))
